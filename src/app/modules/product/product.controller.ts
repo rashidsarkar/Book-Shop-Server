@@ -57,19 +57,39 @@ const getAllProduct = async (req: Request, res: Response) => {
     );
 
     res.json({
-      message: 'Products retrieved successfully',
+      message: 'Book  retrieved successfully',
       success: true,
       data: result, // The data is the result of the service call
     });
   } catch (error) {
     res.status(500).json({
-      message: 'An error occurred while fetching products',
+      message: 'An error occurred while fetching Book ',
       success: false,
       error: error instanceof Error ? error.message : 'Unknown error',
     });
   }
 };
+
+const getProductByID = async (req: Request, res: Response) => {
+  try {
+    const { productId } = req.params;
+    const result = await productService.getProductByIDFromDB(productId);
+    res.json({
+      message: 'Book retrieved successfully',
+      success: true,
+      data: result, // The data is the result of the service call
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: 'An error occurred while fetching Book ',
+      success: false,
+      error: error instanceof Error ? error.message : 'Unknown error',
+    });
+  }
+};
+
 export const productControllers = {
   createProduct,
   getAllProduct,
+  getProductByID,
 };
