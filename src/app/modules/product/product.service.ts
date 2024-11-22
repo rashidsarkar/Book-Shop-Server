@@ -6,21 +6,26 @@ const createProductIntoDB = async (product: TProduct) => {
   return result;
 };
 const getAllProductFromDB = async (searchItem: Record<string, unknown>) => {
+  // console.log(searchItem);
   const { searchTerm } = searchItem;
-
-  const result = await Product.aggregate([
-    {
-      $match: {
-        $or: [
-          { title: searchTerm },
-          { author: searchTerm },
-          { category: searchTerm },
-        ],
+  // console.log(searchTerm);
+  if (!searchTerm) {
+    const result = await Product.find();
+    return result;
+  } else {
+    const result = await Product.aggregate([
+      {
+        $match: {
+          $or: [
+            { title: searchTerm },
+            { author: searchTerm },
+            { category: searchTerm },
+          ],
+        },
       },
-    },
-  ]);
-
-  return result;
+    ]);
+    return result;
+  }
 };
 const getProductByIDFromDB = async (id: string) => {
   const result = await Product.findById(id);
