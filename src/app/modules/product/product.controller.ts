@@ -25,6 +25,7 @@ const createProduct = async (req: Request, res: Response): Promise<any> => {
           field: err.path.join('.'),
           message: err.message,
         })),
+        stack: error.stack,
       });
     }
 
@@ -34,6 +35,7 @@ const createProduct = async (req: Request, res: Response): Promise<any> => {
       message: 'An error occurred while creating the product',
       success: false,
       error: error instanceof Error ? error.message : 'Unknown error',
+      stack: null,
     });
   }
 };
@@ -50,10 +52,12 @@ const getAllProduct = async (req: Request, res: Response) => {
       data: result, // The data is the result of the service call
     });
   } catch (error) {
+    console.log(error);
     res.status(500).json({
       message: 'An error occurred while fetching Book ',
       success: false,
       error: error instanceof Error ? error.message : 'Unknown error',
+      stack: null,
     });
   }
 };
@@ -68,6 +72,7 @@ const getProductByID = async (req: Request, res: Response) => {
       data: result, // The data is the result of the service call
     });
   } catch (error) {
+    console.log(error);
     res.status(500).json({
       message: 'An error occurred while fetching Book ',
       success: false,
@@ -90,10 +95,12 @@ const updateProductByID = async (req: Request, res: Response) => {
       data: result, // The data is the result of the service call
     });
   } catch (error) {
+    console.log(error);
     res.status(500).json({
       message: 'An error occurred while fetching Book ',
       success: false,
       error: error instanceof Error ? error.message : 'Unknown error',
+      stack: null,
     });
   }
 };
@@ -115,13 +122,17 @@ const deleteProductByID = async (req: Request, res: Response) => {
         message: 'Failed to delete the Book. Please try again.',
         success: false,
         data: {},
+        stack: null,
       });
     }
   } catch (error) {
+    console.log(error);
+
     res.status(500).json({
       message: 'An error occurred while fetching Book ',
       success: false,
       error: error instanceof Error ? error.message : 'Unknown error',
+      stack: null,
     });
   }
 };

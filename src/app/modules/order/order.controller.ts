@@ -33,6 +33,7 @@ const createOrder = async (req: Request, res: Response): Promise<any> => {
           field: err.path.join('.'),
           message: err.message,
         })),
+        stack: error.stack,
       });
     }
 
@@ -42,6 +43,7 @@ const createOrder = async (req: Request, res: Response): Promise<any> => {
       message: 'An error occurred while creating the order',
       success: false,
       error: error instanceof Error ? error.message : 'Unknown error',
+      stack: null,
     });
   }
 };

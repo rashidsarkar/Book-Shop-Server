@@ -7,15 +7,17 @@ const createOrderIntoDB = async (orderData: TOrder) => {
   const productID = orderData.product;
   const myQuantity = orderData.quantity;
   const product: TProduct | null = await Product.findById(productID);
-  if (product.quantity < myQuantity) {
-    return { error: 'Insufficient stock to fulfill the order' };
+  if (product) {
+    if (product.quantity < myQuantity) {
+      return { error: 'Insufficient stock to fulfill the order' };
+    }
   }
 
-  const updatedProduct = await Product.findByIdAndUpdate(
+  await Product.findByIdAndUpdate(
     { _id: productID },
     {
       $inc: { quantity: -myQuantity },
-      $set: { inStock: product.quantity - myQuantity > 0 },
+      $set: { inStock: product!.quantity - myQuantity > 0 },
     },
     { new: true },
   );
