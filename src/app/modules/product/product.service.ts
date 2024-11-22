@@ -5,10 +5,20 @@ const createProductIntoDB = async (product: TProduct) => {
   const result = await Product.create(product);
   return result;
 };
-const getAllProductFromDB = async (searchTerm: string, filter: string) => {
-  const query: { [key: string]: string } = {};
-  query[searchTerm] = filter;
-  const result = await Product.find(query);
+const getAllProductFromDB = async (searchItem: Record<string, unknown>) => {
+  const { searchTerm } = searchItem;
+
+  const result = await Product.aggregate([
+    {
+      $match: {
+        $or: [
+          { title: searchTerm },
+          { author: searchTerm },
+          { category: searchTerm },
+        ],
+      },
+    },
+  ]);
 
   return result;
 };

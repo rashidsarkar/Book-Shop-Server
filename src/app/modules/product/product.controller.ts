@@ -2,11 +2,12 @@ import { Request, Response } from 'express';
 import { productService } from './product.service';
 import { productSchemaValidation } from './product.validation';
 import { ZodError } from 'zod';
-import { Product } from './product.model';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const createProduct = async (req: Request, res: Response): Promise<any> => {
   try {
     const productData = req.body;
+    console.log();
     const productZodParseData = productSchemaValidation.parse(productData);
     const result =
       await productService.createProductIntoDB(productZodParseData);
@@ -20,7 +21,7 @@ const createProduct = async (req: Request, res: Response): Promise<any> => {
       return res.status(400).json({
         message: 'Validation failed',
         success: false,
-        errors: error.errors.map((err) => ({
+        error: error.errors.map((err) => ({
           field: err.path.join('.'),
           message: err.message,
         })),
@@ -39,23 +40,9 @@ const createProduct = async (req: Request, res: Response): Promise<any> => {
 
 const getAllProduct = async (req: Request, res: Response) => {
   try {
-    const searchQuery = req.query;
-    let searchTerm: string = '';
-    if (Object.keys(searchQuery)[0] == 'category') {
-      searchTerm = 'category';
-    } else if (Object.keys(searchQuery)[0] == 'title') {
-      searchTerm = 'title';
-    } else if (Object.keys(searchQuery)[0] == 'author') {
-      searchTerm = 'author';
-    }
+    // const { searchTerm } = req.query;
 
-    const filter = searchQuery[searchTerm];
-    //TODO - type error
-
-    const result = await productService.getAllProductFromDB(
-      searchTerm,
-      filter as string,
-    );
+    const result = await productService.getAllProductFromDB(req.query);
 
     res.json({
       message: 'Book retrieved successfully',
