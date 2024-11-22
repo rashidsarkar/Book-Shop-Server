@@ -18,8 +18,8 @@ const getProductByIDFromDB = async (id: string) => {
   return result;
 };
 const updateProductByIDFromDB = async (id: string, upDateData: object) => {
-  const result = await Product.findById(id);
-
+  const result = await Product.findByIdAndUpdate(id, upDateData, { new: true });
+  // console.log(result);
   return result;
 };
 export const productService = {

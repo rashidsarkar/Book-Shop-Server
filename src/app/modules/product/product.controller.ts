@@ -91,7 +91,7 @@ const updateProductByID = async (req: Request, res: Response) => {
   try {
     const { productId } = req.params;
     const upDateData: object = req.body;
-    console.log(upDateData);
+
     const result = await productService.updateProductByIDFromDB(
       productId,
       upDateData,
