@@ -32,4 +32,5 @@ export const productSchemaValidation = z.object({
   inStock: z.boolean({
     required_error: 'InStock is required',
   }),
+  // isDeleted: z.boolean().default(false),
 });

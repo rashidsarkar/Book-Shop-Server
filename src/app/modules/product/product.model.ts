@@ -40,10 +40,30 @@ const productSchema = new Schema<TProduct>(
       type: Boolean,
       required: true,
     },
+
+    // isDeleted: {
+    //   type: Boolean,
+    //   default: false,
+    // },
   },
   {
     timestamps: true,
   },
 );
+// productSchema.pre('find', function (next) {
+//   this.find({ isDeleted: { $ne: true } }).select('-isDeleted');
+//   next();
+// });
+// productSchema.pre('findOne', function (next) {
+//   this.findOne({ isDeleted: { $ne: true } }).select('-isDeleted');
+//   next();
+// });
+
+// productSchema.pre('aggregate', function (next) {
+//   // this.aggregate({ isDeleted: { $ne: true } });
+//   this.pipeline().unshift({ $match: { isDeleted: { $ne: true } } });
+
+//   next();
+// });
 
 export const Product = model<TProduct>('Product', productSchema);

@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { productService } from './product.service';
 import { productSchemaValidation } from './product.validation';
 import { ZodError } from 'zod';
+import { Product } from './product.model';
 
 const createProduct = async (req: Request, res: Response): Promise<any> => {
   try {
@@ -109,9 +110,39 @@ const updateProductByID = async (req: Request, res: Response) => {
     });
   }
 };
+const deleteProductByID = async (req: Request, res: Response) => {
+  try {
+    const { productId } = req.params;
+
+    const result = await productService.deleteProductByIDFromDB(productId);
+    console.log(result + 'from con');
+    //TODO -  result nea kaj korte hobe
+    if (result) {
+      res.status(200).json({
+        message: 'Book deleted successfully.',
+        success: true,
+        data: {},
+      });
+    } else {
+      res.status(400).json({
+        message: 'Failed to delete the Book. Please try again.',
+        success: false,
+        data: {},
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      message: 'An error occurred while fetching Book ',
+      success: false,
+      error: error instanceof Error ? error.message : 'Unknown error',
+    });
+  }
+};
+
 export const productControllers = {
   createProduct,
   getAllProduct,
   getProductByID,
   updateProductByID,
+  deleteProductByID,
 };
