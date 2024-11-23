@@ -76,7 +76,7 @@ NODE_ENV=development
 Run the following command to start the application:
 
 ```bash
-npm run dev
+npm run start:dev
 ```
 
 The server will start on `http://localhost:5000`.
