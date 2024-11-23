@@ -16,7 +16,7 @@ app.get('/', (req: Request, res: Response) => {
   res.send('Hello World from book!');
 });
 
-app.use((req: Request, res: Response, next: NextFunction) => {
+app.use((req: Request, res: Response) => {
   res.status(404).json({
     success: false,
     message: 'Route not found',
