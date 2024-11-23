@@ -42,17 +42,13 @@ const createProduct = async (req: Request, res: Response): Promise<any> => {
 
 const getAllProduct = async (req: Request, res: Response) => {
   try {
-    // const { searchTerm } = req.query;
-
     const result = await productService.getAllProductFromDB(req.query);
-
     res.json({
       message: 'Book retrieved successfully',
       success: true,
-      data: result, // The data is the result of the service call
+      data: result,
     });
   } catch (error) {
-    console.log(error);
     res.status(500).json({
       message: 'An error occurred while fetching Book ',
       success: false,
@@ -69,7 +65,7 @@ const getProductByID = async (req: Request, res: Response) => {
     res.json({
       message: 'Book retrieved successfully',
       success: true,
-      data: result, // The data is the result of the service call
+      data: result,
     });
   } catch (error) {
     res.status(404).json({
@@ -84,7 +80,6 @@ const updateProductByID = async (req: Request, res: Response) => {
   try {
     const { productId } = req.params;
     const upDateData: object = req.body;
-
     const result = await productService.updateProductByIDFromDB(
       productId,
       upDateData,
@@ -92,7 +87,7 @@ const updateProductByID = async (req: Request, res: Response) => {
     res.json({
       message: 'Book updated successfully',
       success: true,
-      data: result, // The data is the result of the service call
+      data: result,
     });
   } catch (error) {
     console.log(error);
@@ -110,7 +105,6 @@ const deleteProductByID = async (req: Request, res: Response) => {
 
     const result = await productService.deleteProductByIDFromDB(productId);
     console.log(result + 'from con');
-    //TODO -  result nea kaj korte hobe
     if (result) {
       res.status(200).json({
         message: 'Book deleted successfully.',
@@ -126,8 +120,6 @@ const deleteProductByID = async (req: Request, res: Response) => {
       });
     }
   } catch (error) {
-    console.log(error);
-
     res.status(500).json({
       message: 'An error occurred while fetching Book ',
       success: false,

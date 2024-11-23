@@ -7,9 +7,7 @@ import { ZodError } from 'zod';
 const createOrder = async (req: Request, res: Response): Promise<any> => {
   try {
     const orderData = req.body;
-    // console.log(orderData);
     const orderZodParseData = orderValidationSchema.parse(orderData);
-
     const result = await orderService.createOrderIntoDB(orderZodParseData);
     if ('error' in result) {
       res.status(400).json({
@@ -36,10 +34,7 @@ const createOrder = async (req: Request, res: Response): Promise<any> => {
         stack: error.stack,
       });
     }
-
-    // Handle general errors
-    console.error('Error creating order:', error);
-    res.status(500).json({
+    res.status(422).json({
       message: 'An error occurred while creating the order',
       success: false,
       error: error instanceof Error ? error.message : 'Unknown error',

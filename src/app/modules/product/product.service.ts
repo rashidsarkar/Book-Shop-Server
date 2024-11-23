@@ -6,9 +6,7 @@ const createProductIntoDB = async (product: TProduct) => {
   return result;
 };
 const getAllProductFromDB = async (searchItem: Record<string, unknown>) => {
-  // console.log(searchItem);
   const { searchTerm } = searchItem;
-  // console.log(searchTerm);
   if (!searchTerm) {
     const result = await Product.find();
     return result;
