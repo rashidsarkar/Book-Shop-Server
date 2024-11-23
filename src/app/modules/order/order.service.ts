@@ -12,7 +12,6 @@ const createOrderIntoDB = async (orderData: TOrder) => {
       return { error: 'Insufficient stock to fulfill the order' };
     }
   }
-
   await Product.findByIdAndUpdate(
     { _id: productID },
     {

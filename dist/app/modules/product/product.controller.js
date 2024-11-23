@@ -17,7 +17,6 @@ const zod_1 = require("zod");
 const createProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const productData = req.body;
-        console.log();
         const productZodParseData = product_validation_1.productSchemaValidation.parse(productData);
         const result = yield product_service_1.productService.createProductIntoDB(productZodParseData);
         res.json({
