@@ -72,11 +72,11 @@ const getProductByID = async (req: Request, res: Response) => {
       data: result, // The data is the result of the service call
     });
   } catch (error) {
-    console.log(error);
-    res.status(500).json({
+    res.status(404).json({
       message: 'An error occurred while fetching Book ',
       success: false,
       error: error instanceof Error ? error.message : 'Unknown error',
+      stack: null,
     });
   }
 };
